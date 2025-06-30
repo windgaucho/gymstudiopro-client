@@ -1,5 +1,21 @@
 // src/routes/gimnasios/component.tsx
-import { useGimnasios } from '../../../lib/gimnasios-graphql';
+import { useGimnasios } from '@/lib/gimnasios-graphql';
+
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@heroui/react";
+
+export const columns = [
+  { name: "Nombre", uid: "nombre" },
+  { name: "Dirección", uid: "direccion" },
+  { name: "Teléfono", uid: "telefono" },
+  { name: "Acciones", uid: "actions" },
+];
 
 export function GimnasiosPage() {
   const { data, isLoading, error } = useGimnasios();
@@ -8,17 +24,19 @@ export function GimnasiosPage() {
   if (error) return <p className="text-red-500">❌ {error.message}</p>;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Gimnasios</h1>
-      <ul className="space-y-2">
-        {data?.map((g) => (
-          <li key={g.id} className="border rounded p-4">
-            <strong>{g.nombre}</strong><br />
-            {g.direccion}<br />
-            <small>{g.telefono}</small>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Table aria-label="Example table with dynamic content">
+      <TableHeader>
+        {columns.map((column) =>
+          <TableColumn key={column.uid}>{column.name}</TableColumn>
+        )}
+      </TableHeader>
+      <TableBody>
+        {data?.map((row) =>
+          <TableRow key={row.id}>
+            {(columnKey) => <TableCell>{row[columnKey]}</TableCell>}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 }
