@@ -4,7 +4,6 @@ import { GimnasiosDropdown } from "./GimnasiosDropdown";
 import { HomeIcon } from "@/components/icons/home-icon";
 import { PaymentsIcon } from "@/components/icons/payments-icon";
 import { BalanceIcon } from "@/components/icons/balance-icon";
-import { AccountsIcon } from "@/components/icons/accounts-icon";
 import { CustomersIcon } from "@/components/icons/customers-icon";
 import { ProductsIcon } from "@/components/icons/products-icon";
 import { ReportsIcon } from "@/components/icons/reports-icon";
@@ -18,6 +17,7 @@ import { FilterIcon } from "@/components/icons/filter-icon";
 import { useSidebarContext } from "../layout-context";
 import { ChangeLogIcon } from "@/components/icons/changelog-icon";
 import { useRouter } from "@tanstack/react-router";
+import { Icon } from '@iconify-icon/react';
 
 export const SidebarWrapper = () => {
   const router = useRouter();
@@ -45,12 +45,12 @@ export const SidebarWrapper = () => {
               isActive={pathname === "/"}
               href="/"
             />
-            <SidebarMenu title="Main Menu">
+            <SidebarMenu title="Configuración">
               <SidebarItem
-                isActive={pathname === "/accounts"}
-                title="Accounts"
-                icon={<AccountsIcon />}
-                href="accounts"
+                isActive={pathname === "/gimnasios"}
+                title="Gimnasios"
+                icon={<Icon icon="solar:buildings-outline" />}
+                href="gimnasios"
               />
               <SidebarItem
                 isActive={pathname === "/payments"}

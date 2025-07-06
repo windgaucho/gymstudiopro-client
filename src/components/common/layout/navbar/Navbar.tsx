@@ -63,7 +63,9 @@ export const NavbarWrapper = ({ children }: Props) => {
           </NavbarContent>
         </NavbarContent>
       </Navbar>
-      {children}
+      <div className="flex flex-col m-2">
+        {children}
+      </div>
     </div>
   );
 };
