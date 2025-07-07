@@ -1,19 +1,13 @@
 // src/routes/gimnasios/component.tsx
 import ButtonDrawer from '@/components/common/drawer/ButtonDrawer';
-import { Icon } from '@iconify-icon/react';
+import { PencilSquareIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { useCallback, type Key } from 'react';
 
 import Datatable from '@/components/common/datatable/Datatable';
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger
-} from "@heroui/react";
+import { Button } from '@heroui/react';
 import UpsertGimnasio from './UpsertGimnasio';
-import type { Gimnasio } from './types';
 import { useGimnasios } from './graphql';
+import type { Gimnasio } from './types';
 
 const columns = [
   { name: "Nombre", uid: "nombre" },
@@ -36,32 +30,22 @@ export function GimnasiosPage() {
         return <p>{cellValue}</p>;
       case 'actions':
         return (
-          <div className="relative flex justify-center items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <Icon icon="solar:menu-dots-line-duotone" width="24" height="24" />
+          <div className="flex justify-center items-center gap-4">
+            <ButtonDrawer
+              title="Editar gimnasio"
+              bodyRenderer={({ onClose }) =>
+                <UpsertGimnasio
+                  onClose={onClose}
+                  gimnasio={gimnasio}
+                  id={gimnasio.id}
+                />
+              }
+              buttonRenderer={
+                <Button isIconOnly={true} size="sm" color="primary" variant="light">
+                  <PencilSquareIcon className="w-6 h-6" />
                 </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem key="edit">
-                  <ButtonDrawer
-                    buttonVariant="light"
-                    title="Editar gimnasio"
-                    bodyRenderer={({ onClose }) =>
-                      <UpsertGimnasio
-                        onClose={onClose}
-                        gimnasio={gimnasio}
-                        id={gimnasio.id}
-                      />
-                    }
-                    buttonIcon={<Icon icon="solar:clapperboard-edit-line-duotone" />}
-                    buttonTitle='Editar'
-                  />
-                </DropdownItem>
-                <DropdownItem key="delete">Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+              }
+            />
           </div>
         );
       default:
@@ -85,8 +69,12 @@ export function GimnasiosPage() {
               id=''
             />
           }
-          buttonIcon={<Icon icon="solar:add-circle-line-duotone" />}
-          buttonTitle='Agregar gimnasio'
+          buttonRenderer={
+            <Button size="sm" color="primary" variant="light">
+              <PlusIcon className="w-6 h-6" />
+              Agregar gimnasio
+            </Button>
+          }
         />
       </div>
       <Datatable columns={columns} data={data ?? []} renderCell={renderCell} />
