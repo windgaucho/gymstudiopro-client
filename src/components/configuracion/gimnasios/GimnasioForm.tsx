@@ -1,4 +1,5 @@
 import { Form, Input } from "@heroui/react";
+import { useForm, Controller } from "react-hook-form";
 import type { InputGimnasio } from "./types";
 import { FormActions } from "@/components/common/forms/FormActions";
 
@@ -9,60 +10,95 @@ declare interface Props {
 }
 
 export default function GimnasioForm({ gimnasio, onClose, onSubmit }: Props) {
-  const handleSubmit = (values: InputGimnasio) => {
-    onSubmit(values)
-  }
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InputGimnasio>({
+    defaultValues: gimnasio,
+  });
+
+  const onSubmitForm = (values: InputGimnasio) => {
+    onSubmit(values);
+  };
 
   return (
     <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        const data = Object.fromEntries(new FormData(e.currentTarget)) as InputGimnasio;
-        handleSubmit(data)
-      }}
+      onSubmit={handleSubmit(onSubmitForm)}
+      className="flex flex-col gap-4"
     >
-      <Input
-        isRequired
-        errorMessage="ingrese el nombre del gimnasio"
-        label="Nombre"
-        labelPlacement="outside"
+      <Controller
         name="nombre"
-        placeholder="Nombre del gimnasio"
-        type="text"
-        defaultValue={gimnasio.nombre}
+        control={control}
+        rules={{ required: "El nombre es requerido" }}
+        render={({ field }) => (
+          <Input
+            {...field}
+            label="Nombre"
+            labelPlacement="outside"
+            placeholder="Nombre del gimnasio"
+            type="text"
+            isInvalid={!!errors.nombre}
+            errorMessage={errors.nombre?.message}
+          />
+        )}
       />
-      <Input
-        isRequired
-        errorMessage="ingrese la dirección del gimnasio"
-        label="Dirección"
-        labelPlacement="outside"
+      <Controller
         name="direccion"
-        placeholder="Dirección del gimnasio"
-        type="text"
-        defaultValue={gimnasio.direccion}
+        control={control}
+        rules={{ required: "La dirección es requerida" }}
+        render={({ field }) => (
+          <Input
+            {...field}
+            label="Dirección"
+            labelPlacement="outside"
+            placeholder="Dirección del gimnasio"
+            type="text"
+            isInvalid={!!errors.direccion}
+            errorMessage={errors.direccion?.message}
+          />
+        )}
       />
-      <Input
-        isRequired
-        errorMessage="ingrese el teléfono del gimnasio"
-        label="Teléfono"
-        labelPlacement="outside"
+      <Controller
         name="telefono"
-        placeholder="Teléfono del gimnasio"
-        type="text"
-        defaultValue={gimnasio.telefono}
+        control={control}
+        rules={{ required: "El teléfono es requerido" }}
+        render={({ field }) => (
+          <Input
+            {...field}
+            label="Teléfono"
+            labelPlacement="outside"
+            placeholder="Teléfono del gimnasio"
+            type="text"
+            isInvalid={!!errors.telefono}
+            errorMessage={errors.telefono?.message}
+          />
+        )}
       />
-      <Input
-        isRequired
-        errorMessage="ingrese el email del gimnasio"
-        label="Email"
-        labelPlacement="outside"
+      <Controller
         name="email"
-        placeholder="Email del gimnasio"
-        type="email"
-        defaultValue={gimnasio.email}
+        control={control}
+        rules={{
+          required: "El email es requerido",
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "Email inválido"
+          }
+        }}
+        render={({ field }) => (
+          <Input
+            {...field}
+            label="Email"
+            labelPlacement="outside"
+            placeholder="Email del gimnasio"
+            type="email"
+            isInvalid={!!errors.email}
+            errorMessage={errors.email?.message}
+          />
+        )}
       />
       <FormActions onCancel={onClose} />
     </Form>
-  )
+  );
 }
 

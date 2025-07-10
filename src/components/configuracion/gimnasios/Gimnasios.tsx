@@ -1,12 +1,13 @@
 // src/routes/gimnasios/component.tsx
 import ButtonDrawer from '@/components/common/drawer/ButtonDrawer';
-import { PencilSquareIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { PlusIcon } from '@heroicons/react/24/solid';
 import { useCallback, type Key } from 'react';
 
 import Datatable from '@/components/common/datatable/Datatable';
+import { DatatableActions } from '@/components/common/datatable/DatatableActions';
 import { Button } from '@heroui/react';
 import UpsertGimnasio from './UpsertGimnasio';
-import { useGimnasios } from './graphql';
+import { useGimnasios, useRemoveGimnasio } from './graphql';
 import type { Gimnasio } from './types';
 
 const columns = [
@@ -20,6 +21,12 @@ const columns = [
 export function GimnasiosPage() {
   const { data, isLoading, error } = useGimnasios();
 
+  const mutation = useRemoveGimnasio();
+
+  const handleEliminar = useCallback(async (id: string) => {
+    mutation.mutate({ id })
+  }, [mutation]);
+
   const renderCell = useCallback((gimnasio: Gimnasio, columnKey: Key) => {
     const cellValue = gimnasio[columnKey as keyof Gimnasio];
     switch (columnKey) {
@@ -30,28 +37,21 @@ export function GimnasiosPage() {
         return <p>{cellValue}</p>;
       case 'actions':
         return (
-          <div className="flex justify-center items-center gap-4">
-            <ButtonDrawer
-              title="Editar gimnasio"
-              bodyRenderer={({ onClose }) =>
-                <UpsertGimnasio
-                  onClose={onClose}
-                  gimnasio={gimnasio}
-                  id={gimnasio.id}
-                />
-              }
-              buttonRenderer={
-                <Button isIconOnly={true} size="sm" color="primary" variant="light">
-                  <PencilSquareIcon className="w-6 h-6" />
-                </Button>
-              }
-            />
-          </div>
+          <DatatableActions
+            row={gimnasio}
+            title="Editar Gimnasio"
+            EditComponent={({ onClose }) => {
+              const { id, ...gimnasioData } = gimnasio;
+              return <UpsertGimnasio gimnasio={gimnasioData} onClose={onClose} id={id} />
+            }
+            }
+            onDelete={(id) => handleEliminar(id)}
+          />
         );
       default:
         return cellValue;
     }
-  }, []);
+  }, [handleEliminar]);
 
   if (isLoading) return <p>⏳ Cargando gimnasios...</p>;
   if (error) return <p className="text-red-500">❌ {error.message}</p>;
@@ -65,7 +65,7 @@ export function GimnasiosPage() {
           bodyRenderer={({ onClose }) =>
             <UpsertGimnasio
               onClose={onClose}
-              gimnasio={{ nombre: "GIMNASIO 1", direccion: "", telefono: "", email: "" }}
+              gimnasio={{ nombre: "", direccion: "", telefono: "", email: "" }}
               id=''
             />
           }

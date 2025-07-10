@@ -26,6 +26,12 @@ const UPSERT_GIMNASIO = gql`
   }
 `;
 
+const REMOVE_GIMNASIO = gql`
+  mutation ($id: ID!) {
+    removeGimnasio(id: $id)
+  }
+`;
+
 export function useGimnasios() {
   return useQuery({
     queryKey: ['gimnasios'],
@@ -42,6 +48,22 @@ export function useUpsertGimnasio() {
   return useMutation({
     mutationFn: ({ id, gimnasio }: { id: string; gimnasio: InputGimnasio }) => {
       return gqlClient.request(UPSERT_GIMNASIO, { id, inputGimnasio: gimnasio })
+    },
+    onSuccess: () => {
+      // ✅ refetch gimnasios
+      queryClient.invalidateQueries({
+        queryKey: ['gimnasios']
+      })
+    },
+  })
+}
+
+export function useRemoveGimnasio() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id }: { id: string }) => {
+      return gqlClient.request(REMOVE_GIMNASIO, { id })
     },
     onSuccess: () => {
       // ✅ refetch gimnasios
