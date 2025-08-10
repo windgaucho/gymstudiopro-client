@@ -1,4 +1,4 @@
-import { Layout } from '@/components/common/layout/Layout';
+import { Layout } from '@/components/layout/Layout';
 import { Providers } from "@/providers";
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';

@@ -1,5 +1,5 @@
 import TipoOrganizacionComboBox from "@/components/combobox/TipoOrganizacionComboBox";
-import { FormActions } from "@/components/common/forms/FormActions";
+import { FormActions } from "@/components/forms/FormActions";
 import { Form, Input, Textarea } from "@heroui/react";
 import { Controller, useForm } from "react-hook-form";
 import type { InputOrganizacion } from "./types";
