@@ -1,6 +1,6 @@
 import { Sidebar } from "./Sidebar.styles";
 import { Avatar, Tooltip } from "@heroui/react";
-import { GimnasiosDropdown } from "./GimnasiosDropdown";
+import { OrganizacionesDropdown } from "./OrganizacionesDropdown";
 import { HomeIcon } from "@/components/icons/home-icon";
 import { PaymentsIcon } from "@/components/icons/payments-icon";
 import { BalanceIcon } from "@/components/icons/balance-icon";
@@ -35,7 +35,7 @@ export const SidebarWrapper = () => {
         })}
       >
         <div className={Sidebar.Header()}>
-          <GimnasiosDropdown />
+          <OrganizacionesDropdown />
         </div>
         <div className="flex flex-col justify-between h-full">
           <div className={Sidebar.Body()}>
@@ -47,10 +47,10 @@ export const SidebarWrapper = () => {
             />
             <SidebarMenu title="Configuración">
               <SidebarItem
-                isActive={pathname === "/gimnasios"}
-                title="Gimnasios"
+                isActive={pathname === "/organizaciones"}
+                title="Organizaciones"
                 icon={<Icon icon="solar:buildings-outline" />}
-                href="gimnasios"
+                href="organizaciones"
               />
               <SidebarItem
                 isActive={pathname === "/payments"}

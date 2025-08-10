@@ -1,6 +1,6 @@
 import ButtonDrawer from "@/components/common/drawer/ButtonDrawer";
 import { Button } from "@heroui/react";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import ButtonRemove from "../buttons/ButtonRemove";
 
 interface DatatableActionsProps<T> {
@@ -29,7 +29,7 @@ export function DatatableActions<T extends { id: string }>({
         )}
         buttonRenderer={
           <Button isIconOnly={true} size="sm" variant="light">
-            <PencilSquareIcon className="w-6 h-6" />
+            <FaRegEdit size={16} />
           </Button>
         }
       />
@@ -37,7 +37,7 @@ export function DatatableActions<T extends { id: string }>({
         <ButtonRemove
           title="Eliminar"
           description="¿Estás seguro de eliminar este registro?"
-          buttonIcon={<TrashIcon />}
+          buttonIcon={<FaRegTrashAlt size={16} />}
           onConfirm={() => onDelete(row.id)}
         />
       }
