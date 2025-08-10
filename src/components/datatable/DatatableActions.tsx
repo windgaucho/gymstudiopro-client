@@ -1,4 +1,4 @@
-import ButtonDrawer from "@/components/common/drawer/ButtonDrawer";
+import ButtonDrawer from "@/components/drawer/ButtonDrawer";
 import { Button } from "@heroui/react";
 import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import ButtonRemove from "../buttons/ButtonRemove";

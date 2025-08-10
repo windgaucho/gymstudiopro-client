@@ -1,10 +1,10 @@
 // src/routes/organizaciones/component.tsx
-import ButtonDrawer from '@/components/common/drawer/ButtonDrawer';
+import ButtonDrawer from '@/components/drawer/ButtonDrawer';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { useCallback, type Key } from 'react';
 
-import Datatable from '@/components/common/datatable/Datatable';
-import { DatatableActions } from '@/components/common/datatable/DatatableActions';
+import Datatable from '@/components/datatable/Datatable';
+import { DatatableActions } from '@/components/datatable/DatatableActions';
 import { Button } from '@heroui/react';
 import UpsertOrganizacion from './UpsertOrganizacion';
 import { useOrganizaciones, useRemoveOrganizacion } from './graphql';
