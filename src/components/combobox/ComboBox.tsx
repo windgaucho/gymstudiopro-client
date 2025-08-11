@@ -38,7 +38,7 @@ export default function ComboBox<T>({
   });
 
   return (
-    <Select {...props} items={filteredItems}>
+    <Select {...props} items={filteredItems} selectedKeys={[props.value]}>
       {filteredItems.map((item) => (
         <SelectItem key={item.value}>
           {item.label}

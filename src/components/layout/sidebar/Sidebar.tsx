@@ -1,27 +1,29 @@
-import { Sidebar } from "./Sidebar.styles";
-import { Avatar, Tooltip } from "@heroui/react";
-import { OrganizacionesDropdown } from "./OrganizacionesDropdown";
-import { HomeIcon } from "@/components/icons/home-icon";
-import { PaymentsIcon } from "@/components/icons/payments-icon";
 import { BalanceIcon } from "@/components/icons/balance-icon";
+import { ChangeLogIcon } from "@/components/icons/changelog-icon";
 import { CustomersIcon } from "@/components/icons/customers-icon";
+import { DevIcon } from "@/components/icons/dev-icon";
+import { FilterIcon } from "@/components/icons/filter-icon";
+import { HomeIcon } from "@/components/icons/home-icon";
 import { ProductsIcon } from "@/components/icons/products-icon";
 import { ReportsIcon } from "@/components/icons/reports-icon";
-import { DevIcon } from "@/components/icons/dev-icon";
-import { ViewIcon } from "@/components/icons/view-icon";
 import { SettingsIcon } from "@/components/icons/settings-icon";
+import { ViewIcon } from "@/components/icons/view-icon";
+import { Avatar, Tooltip } from "@heroui/react";
+import { useLocation } from "@tanstack/react-router";
+import { useSidebarContext } from "../layout-context";
 import { CollapseItems } from "./CollapseItems";
+import { OrganizacionesDropdown } from "./OrganizacionesDropdown";
+import { Sidebar } from "./Sidebar.styles";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarMenu } from "./SidebarMenu";
-import { FilterIcon } from "@/components/icons/filter-icon";
-import { useSidebarContext } from "../layout-context";
-import { ChangeLogIcon } from "@/components/icons/changelog-icon";
-import { useRouter } from "@tanstack/react-router";
-import { Icon } from '@iconify-icon/react';
+
+import { SiAwsorganizations } from "react-icons/si";
+import { VscOrganization } from "react-icons/vsc";
 
 export const SidebarWrapper = () => {
-  const router = useRouter();
-  const pathname = router.state.location.pathname;
+  const location = useLocation();
+  const pathname = location.pathname;
+  console.log("pathname", pathname);
   const { collapsed, setCollapsed } = useSidebarContext();
 
   return (
@@ -49,13 +51,14 @@ export const SidebarWrapper = () => {
               <SidebarItem
                 isActive={pathname === "/organizaciones"}
                 title="Organizaciones"
-                icon={<Icon icon="solar:buildings-outline" />}
+                icon={<VscOrganization />}
                 href="organizaciones"
               />
               <SidebarItem
-                isActive={pathname === "/payments"}
-                title="Payments"
-                icon={<PaymentsIcon />}
+                isActive={pathname === "/sucursales"}
+                title="Sucursales"
+                icon={<SiAwsorganizations />}
+                href="sucursales"
               />
               <CollapseItems
                 icon={<BalanceIcon />}
